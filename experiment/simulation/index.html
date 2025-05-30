@@ -9,7 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.1/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body>
     <div class="theme-toggle">
@@ -44,56 +46,56 @@
         <div class="new-layout">
             <!-- Left Column - Input Parameters -->
             <div class="input-column">
-                <div class="card">
-                    <h2>Input Parameters</h2>
-                    <div class="controls">
-                        <div class="input-group">
-                            <label for="pipeLength">
-                                Pipe Length (L)
-                                <i class="ti ti-help-circle" data-tooltip="The total length of the pipe in meters"></i>
-                            </label>
-                            <div class="input-wrapper">
-                                <input type="number" id="pipeLength" min="1" max="10" step="0.1" value="5" />
-                                <span class="unit-label">m</span>
+                    <div class="card">
+                        <h2>Input Parameters</h2>
+                        <div class="controls">
+                            <div class="input-group">
+                                <label for="pipeLength">
+                                    Pipe Length (L) (1 - 10)
+                                    <i class="ti ti-help-circle" data-tooltip="The total length of the pipe in meters"></i>
+                                </label>
+                                <div class="input-wrapper">
+                                    <input type="number" id="pipeLength" min="1" max="10" step="0.1" value="5" />
+                                    <span class="unit-label">m</span>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <div class="input-group">
-                            <label for="pipeDiameter">
-                                Pipe Diameter (D)
-                                <i class="ti ti-help-circle" data-tooltip="Internal diameter of the pipe in meters"></i>
-                            </label>
-                            <div class="input-wrapper">
-                                <input type="number" id="pipeDiameter" min="0.01" max="0.1" step="0.01" value="0.05" />
-                                <span class="unit-label">m</span>
+                            
+                            <div class="input-group">
+                                <label for="pipeDiameter">
+                                    Pipe Diameter (D) (0.01 - 0.1)
+                                    <i class="ti ti-help-circle" data-tooltip="Internal diameter of the pipe in meters"></i>
+                                </label>
+                                <div class="input-wrapper">
+                                    <input type="number" id="pipeDiameter" min="0.01" max="0.1" step="0.01" value="0.05" />
+                                    <span class="unit-label">m</span>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <div class="input-group">
-                            <label for="flowRate">
-                                Flow Rate (Q)
-                                <i class="ti ti-help-circle" data-tooltip="Volume of fluid passing through the pipe per second"></i>
-                            </label>
-                            <input type="range" id="flowRate" min="0" max="2" step="0.1" value="0" />
-                            <div class="value-display">
-                                <span id="flowRateValue">0.0</span>
-                                <span class="unit-label">L/s</span>
+                            
+                            <div class="input-group">
+                                <label for="flowRate">
+                                    Flow Rate (Q) (0 - 2)
+                                    <i class="ti ti-help-circle" data-tooltip="Volume of fluid passing through the pipe per second"></i>
+                                </label>
+                                <input type="range" id="flowRate" min="0" max="2" step="0.1" value="0" />
+                                <div class="value-display">
+                                    <span id="flowRateValue">0.0</span>
+                                    <span class="unit-label">L/s</span>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="input-group">
-                            <label for="fluid">
-                                Fluid Type
-                                <i class="ti ti-help-circle" data-tooltip="Select the type of fluid for simulation"></i>
-                            </label>
-                            <select id="fluid">
-                                <option value="water">Water</option>
-                                <option value="glycerin">Glycerin</option>
-                                <option value="oil">Oil</option>
-                            </select>
+                            <div class="input-group">
+                                <label for="fluid">
+                                    Fluid Type
+                                    <i class="ti ti-help-circle" data-tooltip="Select the type of fluid for simulation"></i>
+                                </label>
+                                <select id="fluid">
+                                    <option value="water">Water</option>
+                                    <option value="glycerin">Glycerin</option>
+                                    <option value="oil">Oil</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                </div>
             </div>
 
             <!-- Right Column -->
@@ -114,18 +116,7 @@
                         </div>
                         
                         <canvas id="pipeCanvas"></canvas>
-                        <div id="pressureReadings">
-                            <div class="pressure-gauge success" id="pressure1">
-                                <i class="ti ti-gauge"></i>
-                                P1: <span>0</span> Pa
-                                <div class="tooltip">Inlet pressure measurement point</div>
-                            </div>
-                            <div class="pressure-gauge" id="pressure2">
-                                <i class="ti ti-gauge"></i>
-                                P2: <span>0</span> Pa
-                                <div class="tooltip">Outlet pressure measurement point</div>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
 
@@ -133,26 +124,26 @@
                 <div class="card calculation-card">
                     <h2>Calculation and Results</h2>
                     <!-- Results Section First -->
-                    <div class="results">
-                        <div class="result-item">
+                        <div class="results">
+                            <div class="result-item">
                             <label>Flow Velocity</label>
-                            <div class="result-value">
-                                <span id="velocity">0.000</span>
-                                <span class="unit-label">m/s</span>
+                                <div class="result-value">
+                                    <span id="velocity">0.000</span>
+                                    <span class="unit-label">m/s</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="result-item">
+                            <div class="result-item">
                             <label>Head Loss</label>
-                            <div class="result-value">
-                                <span id="headLoss">0.000</span>
-                                <span class="unit-label">m</span>
+                                <div class="result-value">
+                                    <span id="headLoss">0.000</span>
+                                    <span class="unit-label">m</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="result-item">
+                            <div class="result-item">
                             <label>Friction Factor</label>
-                            <div class="result-value">
-                                <span id="frictionFactor">0.0000</span>
-                            </div>
+                                <div class="result-value">
+                                    <span id="frictionFactor">0.0000</span>
+                                </div>
                         </div>
                     </div>
 
@@ -189,6 +180,35 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Readings Table Section -->
+                <div class="card readings-card">
+                    <h2>Recorded Readings</h2>
+                    <div class="readings-controls">
+                        <button id="record-reading" class="record-btn">
+                            <i class="ti ti-device-floppy"></i> Record Reading
+                        </button>
+                        <button id="export-pdf" class="export-btn">
+                            <i class="ti ti-file-export"></i> Export PDF
+                        </button>
+                    </div>
+                    <div class="table-container">
+                        <table id="readings-table">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Fluid Type</th>
+                                    <th>Flow Rate (L/s)</th>
+                                    <th>Velocity (m/s)</th>
+                                    <th>Head Loss (m)</th>
+                                    <th>Friction Factor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
             <!-- Graph Section -->
@@ -205,6 +225,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script src="./js/main.js"></script>
+    <script src="simulation.js"></script>
 </body>
 </html> 
