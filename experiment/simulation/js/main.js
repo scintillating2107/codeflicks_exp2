@@ -1,4 +1,3 @@
-//Your JavaScript goes in here
 // Draw static pipe diagram
 function drawStaticPipeDiagram() {
     const canvas = document.getElementById('staticPipeCanvas');
@@ -174,6 +173,9 @@ class PipeFlowSimulator {
             reynolds: 0
         };
         
+        // Initialize readings array
+        this.readings = [];
+        
         // Get and setup canvas
         this.setupCanvas();
         
@@ -189,6 +191,9 @@ class PipeFlowSimulator {
 
         // Initial update to show zero values
         this.updateSimulation();
+
+        // Setup record and export buttons
+        this.setupRecordingControls();
     }
 
     setupCanvas() {
@@ -579,10 +584,17 @@ class PipeFlowSimulator {
     drawParticles() {
         if (!this.ctx || !this.isRunning) return;
 
-        this.particles.forEach(particle => {
-            const particleColor = 'rgba(52, 152, 219, 0.8)';
-            const highlightColor = 'rgba(255, 255, 255, 0.4)';
+        // Get current fluid type and its color
+        const fluidType = this.fluidSelect.value;
+        const fluidColors = {
+            water: 'rgba(52, 152, 219, 0.8)',    // Blue
+            glycerin: 'rgba(255, 105, 180, 0.8)', // Pink
+            oil: 'rgba(241, 196, 15, 0.8)'       // Yellow
+        };
+        const particleColor = fluidColors[fluidType] || fluidColors.water;
+        const highlightColor = 'rgba(255, 255, 255, 0.4)';
             
+        this.particles.forEach(particle => {
             this.ctx.beginPath();
             this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
             this.ctx.fillStyle = particleColor;
@@ -684,6 +696,81 @@ class PipeFlowSimulator {
             this.drawPipe();
             this.drawParticles();
         }
+    }
+
+    setupRecordingControls() {
+        const recordBtn = document.getElementById('record-reading');
+        const exportBtn = document.getElementById('export-pdf');
+        
+        recordBtn.addEventListener('click', () => this.recordReading());
+        exportBtn.addEventListener('click', () => this.exportToPDF());
+    }
+
+    recordReading() {
+        const currentTime = new Date().toLocaleTimeString();
+        const reading = {
+            time: currentTime,
+            fluidType: this.fluidSelect.value,
+            flowRate: parseFloat(this.flowRateInput.value).toFixed(1),
+            velocity: this.simulationValues.velocity.toFixed(3),
+            headLoss: this.simulationValues.headLoss.toFixed(3),
+            frictionFactor: this.simulationValues.frictionFactor.toFixed(4)
+        };
+        
+        this.readings.push(reading);
+        this.updateReadingsTable();
+    }
+
+    updateReadingsTable() {
+        const tbody = document.querySelector('#readings-table tbody');
+        const row = document.createElement('tr');
+        
+        row.innerHTML = `
+            <td>${this.readings[this.readings.length - 1].time}</td>
+            <td>${this.readings[this.readings.length - 1].fluidType}</td>
+            <td>${this.readings[this.readings.length - 1].flowRate}</td>
+            <td>${this.readings[this.readings.length - 1].velocity}</td>
+            <td>${this.readings[this.readings.length - 1].headLoss}</td>
+            <td>${this.readings[this.readings.length - 1].frictionFactor}</td>
+        `;
+        
+        tbody.appendChild(row);
+    }
+
+    exportToPDF() {
+        if (this.readings.length === 0) {
+            alert('No readings to export!');
+            return;
+        }
+
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Add title
+        doc.setFontSize(16);
+        doc.text('Pipe Flow Simulation Readings', 14, 20);
+
+        // Add timestamp
+        doc.setFontSize(10);
+        doc.text(`Generated on: ${new Date().toLocaleString()}`, 14, 30);
+
+        // Create table
+        doc.autoTable({
+            head: [['Time', 'Fluid Type', 'Flow Rate (L/s)', 'Velocity (m/s)', 'Head Loss (m)', 'Friction Factor']],
+            body: this.readings.map(reading => [
+                reading.time,
+                reading.fluidType,
+                reading.flowRate,
+                reading.velocity,
+                reading.headLoss,
+                reading.frictionFactor
+            ]),
+            startY: 35,
+            headStyles: { fillColor: [52, 152, 219] }
+        });
+
+        // Save the PDF
+        doc.save('pipe-flow-readings.pdf');
     }
 }
 
