@@ -4,11 +4,13 @@
 <b>Discipline | <b>Chemical Engineering
 :--|:--|
 <b> Lab | <b> CHEMICAL ENGINEERING FLUID MECHANICS LAB
-<b> Experiment|     <b> To Find The Flow of Flow Using a V Notch
+<b> Experiment|     <b> To Find The Friction losses in a straight pipe 
 
 ### About the Experiment 
-This experiment determines the flow rate of water using a V-notch weir, a triangular-shaped notch that allows water to flow through. The height of water above the notch (head) is measured and used in a standard discharge formula to calculate the theoretical flow rate. By comparing it with the actual collected water over time, the accuracy of the V-notch method can be analyzed. It demonstrates principles of fluid mechanics in open channel flow measurement.
 
+In fluid flow through a pipe, friction losses are the result of the resistance offered by the internal surface of the pipe and the viscosity of the fluid. When a fluid (like water) flows through a pipe, energy is lost due to the interaction between the fluid layers and between the fluid and the pipe walls. This energy loss is known as the frictional head loss or major head loss.
+
+The main aim of this experiment is to quantify the head loss due to friction along a straight pipe and validate it using theoretical formulas like the Darcy-Weisbach equation.
 
 <b>Name of Developer | <b> Ravish Singh Rajput 
 :--|:--|
