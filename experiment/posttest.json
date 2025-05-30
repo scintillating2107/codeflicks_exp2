@@ -2,35 +2,86 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "This is a Sample Question 1?",
+      "question": "What is the primary cause of friction loss in a straight pipe?",
       "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
+        "a": "Change in pipe direction",
+        "b": "Pipe expansion",
+        "c": "Resistance due to viscosity of fluid and pipe wall roughness",
+        "d": "Fluid evaporation"
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "a": "This typically causes minor losses, not friction losses.",
+        "b": "Expansion causes local head losses, not frictional ones.",
+        "c": "Correct. Friction loss is due to interaction between fluid viscosity and pipe roughness.",
+        "d": "Evaporation is not a factor in friction loss."
       },
-      "correctAnswer": "a",
+      "correctAnswer": "c",
       "difficulty": "beginner"
     },
     {
-      "question": "This is a Sample Question 2?",
+      "question": "Which equation is used to calculate head loss due to friction in a straight pipe?",
       "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
+        "a": "Bernoulli's Equation",
+        "b": "Darcy-Weisbach Equation",
+        "c": "Reynolds Number Equation",
+        "d": "Pascal’s Law"
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "a": "Bernoulli's Equation is for energy conservation, not friction loss.",
+        "b": "Correct. It specifically calculates frictional head loss.",
+        "c": "This is used to determine flow regime, not friction loss.",
+        "d": "This relates to pressure transmission, not flow resistance."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "In the Darcy-Weisbach equation, what does the symbol 'f' represent?",
+      "answers": {
+        "a": "Flow rate",
+        "b": "Friction factor",
+        "c": "Force applied",
+        "d": "Frequency of flow"
+      },
+      "explanations": {
+        "a": "Flow rate is represented by Q, not f.",
+        "b": "Correct. 'f' is the dimensionless friction factor.",
+        "c": "Force is not represented by 'f' here.",
+        "d": "Frequency is unrelated to pipe flow friction."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which factor does NOT directly affect friction loss in a straight pipe?",
+      "answers": {
+        "a": "Pipe length",
+        "b": "Pipe diameter",
+        "c": "Fluid viscosity",
+        "d": "Pipe color"
+      },
+      "explanations": {
+        "a": "Longer pipes cause more friction loss.",
+        "b": "Smaller diameters increase friction.",
+        "c": "Higher viscosity increases resistance.",
+        "d": "Correct. Color has no impact on friction."
+      },
+      "correctAnswer": "d",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "As the flow rate of fluid increases in a pipe, the friction loss generally:",
+      "answers": {
+        "a": "Decreases linearly",
+        "b": "Stays constant",
+        "c": "Increases",
+        "d": "Becomes zero"
+      },
+      "explanations": {
+        "a": "Friction loss increases, not decreases.",
+        "b": "It depends on velocity and flow regime.",
+        "c": "Correct. Friction loss increases with velocity.",
+        "d": "Friction never becomes zero in real systems."
       },
       "correctAnswer": "c",
       "difficulty": "beginner"
