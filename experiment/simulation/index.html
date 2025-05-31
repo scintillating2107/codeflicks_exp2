@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="main.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.1/jspdf.plugin.autotable.min.js"></script>
 </head>
@@ -96,6 +96,14 @@
                             </div>
                         </div>
                     </div>
+                    <div class="simulator-controls" style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+                        <button id="stop-simulator" class="stop-btn" type="button">
+                            <i class="ti ti-player-pause"></i> Stop Simulator
+                        </button>
+                        <button id="reset-simulator" class="reset-btn" type="button">
+                            <i class="ti ti-refresh"></i> Reset
+                        </button>
+                    </div>
             </div>
 
             <!-- Right Column -->
@@ -116,6 +124,9 @@
                         </div>
                         
                         <canvas id="pipeCanvas"></canvas>
+                        
+                        <!-- Tooltip for component labels -->
+                        <div id="component-tooltip" class="component-tooltip"></div>
                         
                     </div>
                 </div>
@@ -223,8 +234,30 @@
         </div>
     </div>
 
+    <!-- Voice Assistant Floating Button -->
+    <button id="voice-assistant-btn" class="voice-assistant-btn" aria-label="Voice Assistant">
+        <i class="ti ti-microphone"></i>
+    </button>
+
+    <!-- Voice Assistant Dialog -->
+    <div id="voice-assistant-dialog" class="voice-assistant-dialog" style="display: none;">
+        <div class="voice-assistant-content">
+            <div class="voice-assistant-header">
+                <span class="voice-assistant-avatar">🤖</span>
+                <span class="voice-assistant-title">Team Codeflicks!</span>
+            </div>
+            <div id="voice-assistant-step" class="voice-assistant-step"></div>
+            <div class="voice-assistant-controls">
+                <button id="va-prev" class="va-btn">Prev</button>
+                <button id="va-repeat" class="va-btn">Repeat</button>
+                <button id="va-next" class="va-btn">Next</button>
+                <button id="va-stop" class="va-btn va-stop">Stop</button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script src="./js/main.js"></script>
+    <script src="main.js"></script>
 </body>
 </html> 
