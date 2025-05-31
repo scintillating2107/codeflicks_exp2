@@ -1,70 +1,16 @@
-### 🔍 Detailed Procedure:
-
-Step 1: Initial Setup
-    Ensure the apparatus is properly assembled.
-
-    Fill the sump tank with clean water.
-
-    Check for any leakage in the pipe or joints.
-
-    Open the air vent of the manometer (if present) to remove trapped air.
-
-Step 2: Start the Flow
-    Start the water supply using a centrifugal pump.
-
-    Gradually open the control valve to allow water to flow through the straight pipe.
-
-    Allow some time for the system to stabilize and for steady flow to be established.
-
-Step 3: Measure Pressure Drop
-    Note the pressure heads at two points along the pipe using a U-tube manometer or pressure sensors.
-
-    Record the difference in head between these two points — this represents the head loss due to friction.
-
-Step 4: Measure Flow Rate
-    Divert the water flowing from the pipe into a measuring tank or collecting vessel.
-
-    Use a stopwatch to measure the time taken to collect a known volume of water.
-
-    Calculate flow rate using:
-
-    𝑄 = 𝑉/𝑡
-​
- 
-  Where 
-    Q = discharge (m³/s), 
-
-    V = volume of water (m³),
-  
-    t = time (s).
-
-Step 5: Calculate Velocity
-    Use the formula:
-
-𝑉 = 𝑄/𝐴
-
-
-  Where 
-
-𝐴 = 𝜋
-𝐷^2
-/4
-​
-    is the cross-sectional area of the pipe.
-
-Step 6: Calculate Frictional Head Loss
-  
-  
-    Using the observed pressure difference and known values of length, diameter, and velocity, calculate the head loss and compare it with 
-  the theoretical value from Darcy–Weisbach equation.
-
-Step 7: Repeat for Different Flow Rates
-  
-  
-    Adjust the flow control valve to vary the discharge.
-
-    Repeat the measurement steps for at least 3–5 different flow rates.
-
-    Record all readings in a tabular format.
-
-
+<h2>Procedure</h2>
+<ol>
+  <li>Set up the experimental apparatus by connecting a straight pipe section to the fluid supply system, ensuring all joints are tight and leak-proof.</li>
+  <li>Attach pressure measuring devices such as manometers or pressure gauges at two points along the pipe, separated by a known distance.</li>
+  <li>Fill the system with the fluid (usually water) and ensure there are no air bubbles inside the pipe and pressure lines.</li>
+  <li>Start the fluid flow through the pipe by turning on the pump or opening the inlet valve.</li>
+  <li>Adjust the flow rate to a low, steady value using control valves or flow regulators.</li>
+  <li>Record the pressure readings from the two measuring points once the flow stabilizes.</li>
+  <li>Measure the volumetric flow rate by using a flow meter or by collecting the fluid discharged from the outlet over a measured time interval.</li>
+  <li>Gradually increase the flow rate in steps, repeating steps 6 and 7 for each flow rate.</li>
+  <li>Calculate the pressure drop (ΔP) between the two measuring points for each flow rate.</li>
+  <li>Use the pressure drop and flow velocity data to calculate the frictional head loss in the pipe.</li>
+  <li>Plot the pressure drop or frictional loss against flow velocity to analyze the relationship and compare with theoretical predictions (e.g., using Darcy-Weisbach equation).</li>
+  <li>After completing the tests, slowly reduce the flow rate to zero, turn off the pump, and drain the system if necessary.</li>
+  <li>Clean the equipment and check for any leaks or damage for future use.</li>
+</ol>
