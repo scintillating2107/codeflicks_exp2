@@ -87,63 +87,64 @@
 
 /////////////// Write the MCQ below in the exactly same described format ///////////////
 
-
-  const myQuestions = [
-    {
-      question: "On increasing the radius of the steel ball to double its value the terminal velocity of the ball become box:",  ///// Write the question inside double quotes
-      answers: {
-        a: " double",                  ///// Write the option 1 inside double quotes
-        b: "four times",                  ///// Write the option 2 inside double quotes
-        c: "eight times",                  ///// Write the option 3 inside double quotes
-        d: "sixteen times"                   ///// Write the option 4 inside double quotes
-      },
-      correctAnswer: "b"                ///// Write the correct option inside double quotes
+const myQuestions = [
+  {
+    question 1: "On increasing the radius of the steel ball to double its value, the terminal velocity of the ball becomes:",
+    answers: {
+      a: "double",
+      b: "four times",
+      c: "eight times",
+      d: "sixteen times"
     },
+    correctAnswer: "b"
+  },
 
-    {
-      question: " On increasing density of material of the falling ball its terminal velocity:",  ///// Write the question inside double quotes
-      answers: {
-        a: "Increases",                  ///// Write the option 1 inside double quotes
-        b: "decreases",                  ///// Write the option 2 inside double quotes
-        c: "remains constant",                  ///// Write the option 3 inside double quotes
-        d: "NOT"                   ///// Write the option 4 inside double quotes
-      },
-      correctAnswer: "a"                ///// Write the correct option inside double quotes
-    },                                  ///// To add more questions, copy the section below 
-    									                  ///// this line
-
-
-    /* To add more MCQ's, copy the below section, starting from open curly braces ( { )
-        till closing curly braces comma ( }, )
-
-        and paste it below the curly braces comma ( below correct answer }, ) of above 
-        question
-
-    Copy below section
-
-    {
-      question: "This is question n?",
-      answers: {
-        a: "Option 1",
-        b: "Option 2",
-        c: "Option 3",
-        d: "Option 4"
-      },
-      correctAnswer: "c"
+  {
+    question 2: "On increasing the density of material of the falling ball, its terminal velocity:",
+    answers: {
+      a: "Increases",
+      b: "Decreases",
+      c: "Remains constant",
+      d: "NOT"
     },
+    correctAnswer 3: "a"
+  },
 
-    Copy above section
+  {
+    question 3: "What is the primary cause of friction loss in a straight pipe?",
+    answers: {
+      a: "Change in pipe direction",
+      b: "Pipe expansion",
+      c: "Resistance due to viscosity of fluid and pipe wall roughness",
+      d: "Fluid evaporation"
+    },
+    correctAnswer: "c"
+  },
 
-    */
+  {
+    question 4: "Which equation is used to calculate head loss due to friction in a straight pipe?",
+    answers: {
+      a: "Bernoulli's Equation",
+      b: "Darcy-Weisbach Equation",
+      c: "Reynolds Number Equation",
+      d: "Pascal’s Law"
+    },
+    correctAnswer: "b"
+  },
 
+  {
+    question 5: "As the flow rate of fluid increases in a pipe, the friction loss generally:",
+    answers: {
+      a: "Decreases linearly",
+      b: "Stays constant",
+      c: "Increases",
+      d: "Becomes zero"
+    },
+    correctAnswer: "c"
+  }
+];
 
-
-
-  ];
-
-
-
-
+  
 /////////////////////////////////////////////////////////////////////////////
 
 /////////////////////// Do not modify the below code ////////////////////////
