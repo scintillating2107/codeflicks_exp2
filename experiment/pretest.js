@@ -89,43 +89,57 @@
 
 const myQuestions = [
   {
-    question: "What does frictional loss in a pipe primarily depend on?",
+    question: "1. What does frictional loss in a pipe primarily depend on?",  ///// Write the question inside double quotes
     answers: {
-      a: "Type of fluid only",
-      b: "Length and roughness of the pipe",
-      c: "Color of the pipe",
-      d: "Direction of sunlight"
+      a: "Type of fluid only",                  ///// Write the option 1 inside double quotes
+      b: "Length and roughness of the pipe",    ///// Write the option 2 inside double quotes
+      c: "Color of the pipe",                   ///// Write the option 3 inside double quotes
+      d: "Direction of sunlight"                ///// Write the option 4 inside double quotes
     },
-    explanations: {
-      a: "Fluid type matters, but pipe length and roughness are more critical.",
-      b: "Correct! These physical properties directly influence friction losses.",
-      c: "Color has no impact on fluid dynamics.",
-      d: "Sunlight does not affect internal pipe friction."
-    },
-    correctAnswer: "b",
-    difficulty: "beginner"
+    correctAnswer: "b"                          ///// Write the correct option inside double quotes
   },
   {
-    question: "Which of the following flow regimes is most associated with significant friction losses?",
+    question: "2. Which of the following flow regimes is most associated with significant friction losses?",  ///// Write the question inside double quotes
     answers: {
-      a: "Static fluid",
-      b: "Laminar flow",
-      c: "Turbulent flow",
-      d: "Supersonic flow"
+      a: "Static fluid",                        ///// Write the option 1 inside double quotes
+      b: "Laminar flow",                        ///// Write the option 2 inside double quotes
+      c: "Turbulent flow",                      ///// Write the option 3 inside double quotes
+      d: "Supersonic flow"                      ///// Write the option 4 inside double quotes
     },
-    explanations: {
-      a: "A static fluid does not flow and hence has no friction loss.",
-      b: "Laminar flow has lower friction losses compared to turbulent.",
-      c: "Correct! Turbulent flow results in higher friction losses.",
-      d: "Supersonic flow is not typically studied in simple pipe flow scenarios."
-    },
-    correctAnswer: "c",
-    difficulty: "intermediate"
+    correctAnswer: "c"                          ///// Write the correct option inside double quotes
   },
-  // ... more questions ...
+  {
+    question: "3. What does the Reynolds number indicate in pipe flow?",  ///// Write the question inside double quotes
+    answers: {
+      a: "The chemical composition of the fluid",   ///// Write the option 1 inside double quotes
+      b: "The speed of sound in the fluid",         ///// Write the option 2 inside double quotes
+      c: "Whether the flow is laminar or turbulent",///// Write the option 3 inside double quotes
+      d: "The temperature gradient in the pipe"     ///// Write the option 4 inside double quotes
+    },
+    correctAnswer: "c"                              ///// Write the correct option inside double quotes
+  },
+  {
+    question: "4. If the flow rate increases in a pipe, what generally happens to the friction loss?",  ///// Write the question inside double quotes
+    answers: {
+      a: "It decreases",                            ///// Write the option 1 inside double quotes
+      b: "It remains constant",                     ///// Write the option 2 inside double quotes
+      c: "It increases",                            ///// Write the option 3 inside double quotes
+      d: "It becomes zero"                          ///// Write the option 4 inside double quotes
+    },
+    correctAnswer: "c"                              ///// Write the correct option inside double quotes
+  },
+  {
+    question: "5. Which of the following best describes the head loss in a straight pipe due to friction?",  ///// Write the question inside double quotes
+    answers: {
+      a: "A gain in mechanical energy",             ///// Write the option 1 inside double quotes
+      b: "A pressure drop along the length of the pipe", ///// Write the option 2 inside double quotes
+      c: "A thermal reaction inside the fluid",      ///// Write the option 3 inside double quotes
+      d: "An increase in pipe diameter"             ///// Write the option 4 inside double quotes
+    },
+    correctAnswer: "b"                              ///// Write the correct option inside double quotes
+  }
 ];
 
- 
 /////////////////////////////////////////////////////////////////////////////
 
 /////////////////////// Do not modify the below code ////////////////////////
