@@ -60,3 +60,4 @@
 <p>
   By measuring the pressure difference between two points along the pipe and the flow velocity, we can calculate the frictional head loss and analyze the energy losses due to friction. This helps in understanding the efficiency of fluid transport and is crucial in the design of piping systems in engineering applications.
 </p>
+<img src="./images/WhatsApp Image 2025-05-31 at 23.07.12_a68753f4.jpg" alt="des" width="1000">
