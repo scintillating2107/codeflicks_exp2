@@ -22,10 +22,6 @@
   The head loss due to friction (h<sub>f</sub>) in a pipe can be estimated using the <strong>Darcy-Weisbach equation</strong>:
 </p>
 
-<p style="text-align: center; font-weight: bold;">
-  h<sub>f</sub> = f \(\frac{L}{D}\) \(\frac{V^2}{2g}\)
-</p>
-
 <p>
   Where:<br />
   <ul>
@@ -50,10 +46,6 @@
 
 <p>
   The Reynolds number (Re) is a dimensionless quantity used to predict flow patterns in the pipe:
-</p>
-
-<p style="text-align: center; font-weight: bold;">
-  Re = \(\frac{\rho V D}{\mu}\) = \(\frac{V D}{\nu}\)
 </p>
 
 <p>
