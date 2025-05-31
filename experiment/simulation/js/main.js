@@ -20,6 +20,8 @@ function drawStaticPipeDiagram() {
     const waterColor = style.getPropertyValue('--static-water').trim();
     const tapColor = style.getPropertyValue('--static-tap-color').trim();
     const connectionColor = style.getPropertyValue('--static-connection').trim();
+    const textColor = style.getPropertyValue('--text-primary').trim();
+    const accentColor = style.getPropertyValue('--accent-color').trim();
     
     // Clear canvas with theme background
     ctx.fillStyle = bgColor;
@@ -199,16 +201,174 @@ class PipeFlowSimulator {
     setupCanvas() {
         this.canvas = document.getElementById('pipeCanvas');
         if (!this.canvas) {
-            console.error('Pipe canvas not found');
+            console.error('Canvas element not found');
             return;
         }
-        this.ctx = this.canvas.getContext('2d');
         
-        // Initialize canvas size
+        this.ctx = this.canvas.getContext('2d');
         this.resizeCanvas();
         
-        // Add resize listener
+        // Add event listeners for window resize
         window.addEventListener('resize', () => this.resizeCanvas());
+        
+        // Setup component hover detection
+        this.setupComponentHover();
+    }
+
+    setupComponentHover() {
+        this.tooltip = document.getElementById('component-tooltip');
+        if (!this.tooltip) {
+            console.error('Tooltip element not found');
+            return;
+        }
+
+        // Component areas for hover detection
+        this.components = [];
+        
+        // Mouse event listeners
+        this.canvas.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+        this.canvas.addEventListener('mouseleave', () => this.hideTooltip());
+    }
+
+    updateComponentAreas() {
+        if (!this.canvas) return;
+        
+        const centerY = this.canvas.height / 2;
+        const pipeHeight = Math.min(60 * (this.currentDiameter / 0.05), this.canvas.height * 0.6);
+        const wallThickness = 4;
+        
+        this.components = [
+            {
+                name: "Pipe Inlet",
+                description: "Water entry point",
+                x: 50 - wallThickness,
+                y: centerY - pipeHeight/2 - wallThickness,
+                width: wallThickness + 20,
+                height: pipeHeight + wallThickness * 2
+            },
+            {
+                name: "Pipe Outlet", 
+                description: "Water exit point",
+                x: this.canvas.width - 70,
+                y: centerY - pipeHeight/2 - wallThickness,
+                width: wallThickness + 20,
+                height: pipeHeight + wallThickness * 2
+            },
+            {
+                name: "Pressure Tap 1",
+                description: "Upstream pressure measurement point",
+                x: 130,
+                y: centerY - pipeHeight/2 - 40,
+                width: 40,
+                height: 50
+            },
+            {
+                name: "Pressure Tap 2", 
+                description: "Downstream pressure measurement point",
+                x: this.canvas.width - 170,
+                y: centerY - pipeHeight/2 - 40,
+                width: 40,
+                height: 50
+            },
+            {
+                name: "Test Pipe Section",
+                description: "Main pipe for friction loss measurement",
+                x: 50,
+                y: centerY - pipeHeight/2,
+                width: this.canvas.width - 100,
+                height: pipeHeight
+            },
+            {
+                name: "Pipe Wall (Top)",
+                description: "Upper pipe boundary",
+                x: 50,
+                y: centerY - pipeHeight/2 - wallThickness,
+                width: this.canvas.width - 100,
+                height: wallThickness
+            },
+            {
+                name: "Pipe Wall (Bottom)",
+                description: "Lower pipe boundary", 
+                x: 50,
+                y: centerY + pipeHeight/2,
+                width: this.canvas.width - 100,
+                height: wallThickness
+            }
+        ];
+    }
+
+    handleMouseMove(e) {
+        if (!this.components || this.components.length === 0) {
+            this.updateComponentAreas();
+        }
+        
+        const rect = this.canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        // Scale coordinates to canvas internal dimensions
+        const scaleX = this.canvas.width / rect.width;
+        const scaleY = this.canvas.height / rect.height;
+        const canvasX = x * scaleX;
+        const canvasY = y * scaleY;
+        
+        // Check if mouse is over any component
+        let foundComponent = null;
+        for (const component of this.components) {
+            if (canvasX >= component.x && 
+                canvasX <= component.x + component.width &&
+                canvasY >= component.y && 
+                canvasY <= component.y + component.height) {
+                foundComponent = component;
+                break;
+            }
+        }
+        
+        if (foundComponent) {
+            this.showTooltip(foundComponent, e.clientX, e.clientY);
+        } else {
+            this.hideTooltip();
+        }
+    }
+
+    showTooltip(component, mouseX, mouseY) {
+        if (!this.tooltip) return;
+        
+        this.tooltip.innerHTML = `
+            <strong>${component.name}</strong><br>
+            <span style="font-size: 0.8rem; opacity: 0.9;">${component.description}</span>
+        `;
+        
+        // Position tooltip relative to the pipe visualization container
+        const containerRect = this.canvas.parentElement.getBoundingClientRect();
+        const x = mouseX - containerRect.left;
+        const y = mouseY - containerRect.top;
+        
+        // Adjust position to keep tooltip in view
+        const tooltipRect = this.tooltip.getBoundingClientRect();
+        let finalX = x + 10;
+        let finalY = y - 50;
+        
+        // Keep tooltip within container bounds
+        if (finalX + tooltipRect.width > containerRect.width) {
+            finalX = x - tooltipRect.width - 10;
+        }
+        if (finalY < 0) {
+            finalY = y + 20;
+            this.tooltip.classList.add('tooltip-bottom');
+        } else {
+            this.tooltip.classList.remove('tooltip-bottom');
+        }
+        
+        this.tooltip.style.left = `${finalX}px`;
+        this.tooltip.style.top = `${finalY}px`;
+        this.tooltip.classList.add('visible');
+    }
+
+    hideTooltip() {
+        if (this.tooltip) {
+            this.tooltip.classList.remove('visible');
+        }
     }
 
     startSimulation() {
@@ -488,68 +648,105 @@ class PipeFlowSimulator {
     drawPipe() {
         if (!this.ctx) return;
         
+        const ctx = this.ctx;
         const centerY = this.canvas.height/2;
         const pipeHeight = Math.min(60 * (this.currentDiameter / 0.05), this.canvas.height * 0.6);
-        
-        // Draw pipe background
-        this.ctx.beginPath();
-        this.ctx.rect(50, centerY - pipeHeight/2, this.canvas.width - 100, pipeHeight);
-        this.ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--pipe-color').trim();
-        this.ctx.fill();
+        const pipeLength = this.canvas.width - 100;
+        const pipeX = 50;
+        const wallThickness = 8;
+        const endCapRadius = pipeHeight/2 + wallThickness;
 
-        // Create water gradient
-        const waterBase = getComputedStyle(document.documentElement).getPropertyValue('--water-base').trim();
-        const waterColor = waterBase.replace(/[\d.]+\)$/, '0.15)');
-        const waterGradient = this.ctx.createLinearGradient(0, centerY - pipeHeight/2, 0, centerY + pipeHeight/2);
-        waterGradient.addColorStop(0, waterColor);
-        waterGradient.addColorStop(0.5, waterColor);
-        waterGradient.addColorStop(1, waterColor);
+        // 3D shadow below pipe
+        ctx.save();
+        ctx.beginPath();
+        ctx.ellipse(pipeX + pipeLength/2, centerY + pipeHeight/2 + 18, pipeLength/2.2, 12, 0, 0, 2 * Math.PI);
+        ctx.globalAlpha = 0.18;
+        ctx.fillStyle = '#000';
+        ctx.filter = 'blur(2px)';
+        ctx.fill();
+        ctx.filter = 'none';
+        ctx.globalAlpha = 1;
+        ctx.restore();
 
-        this.ctx.fillStyle = waterGradient;
-        this.ctx.fill();
-        
-        // Draw pipe walls
-        const wallThickness = 4;
-        const gradient = this.ctx.createLinearGradient(
-            0, centerY - pipeHeight/2 - wallThickness,
-            0, centerY + pipeHeight/2 + wallThickness
-        );
-        const pipeWall = getComputedStyle(document.documentElement).getPropertyValue('--pipe-wall').trim();
-        const pipeWallDark = getComputedStyle(document.documentElement).getPropertyValue('--pipe-wall-dark').trim();
-        gradient.addColorStop(0, pipeWall);
-        gradient.addColorStop(0.5, pipeWallDark);
-        gradient.addColorStop(1, pipeWall);
-        
-        // Top wall
-        this.ctx.beginPath();
-        this.ctx.rect(50, centerY - pipeHeight/2 - wallThickness, this.canvas.width - 100, wallThickness);
-        this.ctx.fillStyle = gradient;
-        this.ctx.fill();
-        
-        // Bottom wall
-        this.ctx.beginPath();
-        this.ctx.rect(50, centerY + pipeHeight/2, this.canvas.width - 100, wallThickness);
-        this.ctx.fillStyle = gradient;
-        this.ctx.fill();
+        // 3D pipe body (radial gradient)
+        const grad = ctx.createLinearGradient(pipeX, centerY - pipeHeight/2, pipeX, centerY + pipeHeight/2);
+        grad.addColorStop(0, '#444');
+        grad.addColorStop(0.18, '#888');
+        grad.addColorStop(0.5, '#e0e0e0');
+        grad.addColorStop(0.82, '#888');
+        grad.addColorStop(1, '#222');
+        ctx.beginPath();
+        ctx.rect(pipeX, centerY - pipeHeight/2 - wallThickness/2, pipeLength, pipeHeight + wallThickness);
+        ctx.fillStyle = grad;
+        ctx.fill();
 
-        // Draw pipe ends
-        this.ctx.beginPath();
-        this.ctx.rect(50 - wallThickness, centerY - pipeHeight/2 - wallThickness, wallThickness, pipeHeight + wallThickness * 2);
-        this.ctx.fillStyle = gradient;
-        this.ctx.fill();
+        // Water inside pipe (with highlight)
+        const waterGradient = ctx.createLinearGradient(pipeX, centerY - pipeHeight/2, pipeX, centerY + pipeHeight/2);
+        waterGradient.addColorStop(0, 'rgba(30, 70, 160, 0.45)'); // Top dark blue
+        waterGradient.addColorStop(0.4, 'rgba(30, 90, 180, 0.55)'); // Middle dark blue
+        waterGradient.addColorStop(0.7, 'rgba(30, 90, 180, 0.62)'); // Deeper dark blue
+        waterGradient.addColorStop(1, 'rgba(30, 70, 160, 0.45)'); // Bottom dark blue
+        ctx.beginPath();
+        ctx.rect(pipeX + wallThickness/2, centerY - pipeHeight/2 + wallThickness/2, pipeLength - wallThickness, pipeHeight - wallThickness);
+        ctx.fillStyle = waterGradient;
+        ctx.fill();
 
-        this.ctx.beginPath();
-        this.ctx.rect(this.canvas.width - 50, centerY - pipeHeight/2 - wallThickness, wallThickness, pipeHeight + wallThickness * 2);
-        this.ctx.fillStyle = gradient;
-        this.ctx.fill();
-        
+        // Pipe highlight (top)
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(pipeX + 10, centerY - pipeHeight/2 - wallThickness/2 + 4, pipeLength - 20, 8);
+        ctx.globalAlpha = 0.18;
+        ctx.fillStyle = '#fff';
+        ctx.fill();
+        ctx.globalAlpha = 1;
+        ctx.restore();
+
+        // Pipe shadow (bottom)
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(pipeX + 10, centerY + pipeHeight/2 + wallThickness/2 - 12, pipeLength - 20, 8);
+        ctx.globalAlpha = 0.13;
+        ctx.fillStyle = '#000';
+        ctx.fill();
+        ctx.globalAlpha = 1;
+        ctx.restore();
+
+        // 3D end caps (left)
+        ctx.save();
+        ctx.beginPath();
+        ctx.ellipse(pipeX, centerY, endCapRadius, pipeHeight/2 + wallThickness/2, 0, 0, 2 * Math.PI);
+        const capGradL = ctx.createRadialGradient(pipeX - 2, centerY, 2, pipeX, centerY, endCapRadius);
+        capGradL.addColorStop(0, '#fff');
+        capGradL.addColorStop(0.2, '#bbb');
+        capGradL.addColorStop(0.7, '#666');
+        capGradL.addColorStop(1, '#222');
+        ctx.fillStyle = capGradL;
+        ctx.fill();
+        ctx.restore();
+
+        // 3D end caps (right)
+        ctx.save();
+        ctx.beginPath();
+        ctx.ellipse(pipeX + pipeLength, centerY, endCapRadius, pipeHeight/2 + wallThickness/2, 0, 0, 2 * Math.PI);
+        const capGradR = ctx.createRadialGradient(pipeX + pipeLength + 2, centerY, 2, pipeX + pipeLength, centerY, endCapRadius);
+        capGradR.addColorStop(0, '#fff');
+        capGradR.addColorStop(0.2, '#bbb');
+        capGradR.addColorStop(0.7, '#666');
+        capGradR.addColorStop(1, '#222');
+        ctx.fillStyle = capGradR;
+        ctx.fill();
+        ctx.restore();
+
         // Draw pressure taps
         this.drawPressureTap(150, centerY, pipeHeight);
         this.drawPressureTap(this.canvas.width - 150, centerY, pipeHeight);
 
         // Store dimensions for particle animation
-        this.pipeStartX = 50;
-        this.pipeLength = this.canvas.width - 100;
+        this.pipeStartX = pipeX;
+        this.pipeLength = pipeLength;
+        
+        // Update component areas for hover tooltips
+        this.updateComponentAreas();
     }
     
     drawPressureTap(x, centerY, pipeHeight) {
@@ -701,9 +898,51 @@ class PipeFlowSimulator {
     setupRecordingControls() {
         const recordBtn = document.getElementById('record-reading');
         const exportBtn = document.getElementById('export-pdf');
-        
+        const stopBtn = document.getElementById('stop-simulator');
+        const resetBtn = document.getElementById('reset-simulator');
+
         recordBtn.addEventListener('click', () => this.recordReading());
         exportBtn.addEventListener('click', () => this.exportToPDF());
+
+        // Stop Simulator
+        if (stopBtn) {
+            stopBtn.addEventListener('click', () => {
+                this.isRunning = false;
+                // Disable all inputs
+                this.lengthInput.disabled = true;
+                this.diameterInput.disabled = true;
+                this.flowRateInput.disabled = true;
+                this.fluidSelect.disabled = true;
+                stopBtn.disabled = true;
+                resetBtn.disabled = false;
+            });
+        }
+
+        // Reset Simulator
+        if (resetBtn) {
+            resetBtn.addEventListener('click', () => {
+                // Reset all inputs to default values
+                this.lengthInput.value = 5;
+                this.diameterInput.value = 0.05;
+                this.flowRateInput.value = 0;
+                this.fluidSelect.value = 'water';
+                if (this.flowRateValue) this.flowRateValue.textContent = '0.0';
+                // Clear readings
+                this.readings = [];
+                this.updateReadingsTable(true);
+                // Enable all inputs
+                this.lengthInput.disabled = false;
+                this.diameterInput.disabled = false;
+                this.flowRateInput.disabled = false;
+                this.fluidSelect.disabled = false;
+                if (stopBtn) stopBtn.disabled = false;
+                resetBtn.disabled = false;
+                // Restart simulation
+                this.isRunning = true;
+                this.needsUpdate = true;
+                this.updateSimulation();
+            });
+        }
     }
 
     recordReading() {
@@ -721,10 +960,13 @@ class PipeFlowSimulator {
         this.updateReadingsTable();
     }
 
-    updateReadingsTable() {
+    updateReadingsTable(clear = false) {
         const tbody = document.querySelector('#readings-table tbody');
+        if (clear) {
+            tbody.innerHTML = '';
+            return;
+        }
         const row = document.createElement('tr');
-        
         row.innerHTML = `
             <td>${this.readings[this.readings.length - 1].time}</td>
             <td>${this.readings[this.readings.length - 1].fluidType}</td>
@@ -733,7 +975,6 @@ class PipeFlowSimulator {
             <td>${this.readings[this.readings.length - 1].headLoss}</td>
             <td>${this.readings[this.readings.length - 1].frictionFactor}</td>
         `;
-        
         tbody.appendChild(row);
     }
 
@@ -816,4 +1057,188 @@ const observer = new MutationObserver((mutations) => {
 observer.observe(document.documentElement, {
     attributes: true,
     attributeFilter: ['data-theme']
-}); 
+});
+
+// Voice Assistant Logic
+(function() {
+    const steps = [
+        "Welcome to the Pipe Flow Simulator! I will guide you step by step.",
+        "Step 1: Click the 'Start Simulation' button to begin the experiment.",
+        "Step 2: Enter the input parameters such as pipe length, diameter, flow rate, and select the fluid type.",
+        "Step 3: Set the pipe length and diameter using the input fields on the left.",
+        "Step 4: Adjust the flow rate using the slider. You can also select the fluid type.",
+        "Step 5: Observe the flow visualization and the pressure meter on the right.",
+        "Step 6: Check the calculation and results card for velocity, head loss, and friction factor.",
+        "Step 7: Record readings by clicking the 'Record Reading' button. Export your data as PDF if needed.",
+        "Step 8: Use the graph to analyze head loss versus flow velocity.",
+        "You can stop or reset the simulation at any time using the buttons provided.",
+        "This concludes the guided tour. If you need help again, click the microphone button!"
+    ];
+    let currentStep = 0;
+    let isSpeaking = false;
+    let synth = window.speechSynthesis;
+    let selectedVoice = null;
+    let hasStarted = false;
+    let autoAdvance = false;
+
+    // Find a male voice
+    function pickMaleVoice() {
+        const voices = synth.getVoices();
+        // Try to find a male English voice
+        let male = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('male'));
+        if (!male) {
+            // Fallback: pick any English voice with 'male' in the name or a common male voice
+            male = voices.find(v => v.lang.startsWith('en') && (v.name.toLowerCase().includes('man') || v.name.toLowerCase().includes('david') || v.name.toLowerCase().includes('mark') || v.name.toLowerCase().includes('alex') || v.name.toLowerCase().includes('fred') || v.name.toLowerCase().includes('daniel')));
+        }
+        if (!male) {
+            // Fallback: pick any English voice
+            male = voices.find(v => v.lang.startsWith('en'));
+        }
+        return male || voices[0];
+    }
+
+    function speakStep(stepIdx) {
+        if (!synth) return;
+        synth.cancel();
+        isSpeaking = true;
+        const utter = new SpeechSynthesisUtterance(steps[stepIdx]);
+        if (selectedVoice) utter.voice = selectedVoice;
+        utter.rate = 1.02;
+        utter.pitch = 1.0;
+        utter.onend = () => { isSpeaking = false; };
+        synth.speak(utter);
+    }
+
+    function showDialog() {
+        document.getElementById('voice-assistant-dialog').style.display = 'block';
+        document.getElementById('voice-assistant-step').textContent = steps[currentStep];
+    }
+    function hideDialog() {
+        document.getElementById('voice-assistant-dialog').style.display = 'none';
+    }
+    function updateStep(idx, manual = false) {
+        currentStep = idx;
+        window.assistantCurrentStep = currentStep; // Keep global reference in sync
+        document.getElementById('voice-assistant-step').textContent = steps[currentStep];
+        if (manual) {
+            autoAdvance = false;
+            window.assistantAutoAdvance = autoAdvance;
+        }
+        speakStep(currentStep);
+    }
+
+    // Button event listeners
+    document.getElementById('voice-assistant-btn').addEventListener('click', function() {
+        showDialog();
+        updateStep(0);
+    });
+    document.getElementById('va-next').addEventListener('click', function() {
+        if (currentStep < steps.length - 1) {
+            updateStep(currentStep + 1);
+        }
+    });
+    document.getElementById('va-prev').addEventListener('click', function() {
+        if (currentStep > 0) {
+            updateStep(currentStep - 1);
+        }
+    });
+    document.getElementById('va-repeat').addEventListener('click', function() {
+        speakStep(currentStep);
+    });
+    document.getElementById('va-stop').addEventListener('click', function() {
+        synth.cancel();
+        hideDialog();
+    });
+
+    // On load, pick a male voice (after voices are loaded)
+    function setVoice() {
+        selectedVoice = pickMaleVoice();
+    }
+    if (synth.onvoiceschanged !== undefined) {
+        synth.onvoiceschanged = setVoice;
+    }
+    setVoice();
+
+    // Auto-start assistant on page load (only once)
+    window.addEventListener('DOMContentLoaded', function() {
+        if (!hasStarted) {
+            autoAdvance = true;
+            showDialog();
+            updateStep(0);
+            hasStarted = true;
+        }
+    });
+
+    // Expose variables globally for button interaction
+    window.assistantSteps = steps;
+    window.assistantCurrentStep = currentStep;
+    window.assistantAutoAdvance = autoAdvance;
+    window.assistantUpdateStep = updateStep;
+})();
+
+// Button click listeners for auto-advancing assistant
+(function() {
+    // Helper to check if assistant is open and can advance
+    function assistantCanAdvance() {
+        const dialog = document.getElementById('voice-assistant-dialog');
+        return dialog && dialog.style.display !== 'none' && 
+               typeof window.assistantCurrentStep !== 'undefined' && 
+               typeof window.assistantUpdateStep === 'function' &&
+               window.assistantCurrentStep < window.assistantSteps.length - 1;
+    }
+
+    // Wait for DOM to be ready before adding listeners
+    document.addEventListener('DOMContentLoaded', function() {
+        // Listen for Start Simulation button
+        const startBtn = document.getElementById('start-simulation');
+        if (startBtn) {
+            startBtn.addEventListener('click', function() {
+                setTimeout(() => {
+                    if (assistantCanAdvance()) {
+                        window.assistantAutoAdvance = true;
+                        window.assistantUpdateStep(window.assistantCurrentStep + 1);
+                    }
+                }, 1000);
+            });
+        }
+
+        // Listen for Record Reading button
+        const recordBtn = document.getElementById('record-reading');
+        if (recordBtn) {
+            recordBtn.addEventListener('click', function() {
+                setTimeout(() => {
+                    if (assistantCanAdvance()) {
+                        window.assistantAutoAdvance = true;
+                        window.assistantUpdateStep(window.assistantCurrentStep + 1);
+                    }
+                }, 500);
+            });
+        }
+
+        // Listen for Export PDF button
+        const exportBtn = document.getElementById('export-pdf');
+        if (exportBtn) {
+            exportBtn.addEventListener('click', function() {
+                setTimeout(() => {
+                    if (assistantCanAdvance()) {
+                        window.assistantAutoAdvance = true;
+                        window.assistantUpdateStep(window.assistantCurrentStep + 1);
+                    }
+                }, 500);
+            });
+        }
+
+        // Listen for input changes (flow rate, diameter, etc.)
+        const flowRateInput = document.getElementById('flowRate');
+        if (flowRateInput) {
+            flowRateInput.addEventListener('change', function() {
+                setTimeout(() => {
+                    if (assistantCanAdvance() && window.assistantCurrentStep === 3) {
+                        window.assistantAutoAdvance = true;
+                        window.assistantUpdateStep(window.assistantCurrentStep + 1);
+                    }
+                }, 1000);
+            });
+        }
+    });
+})(); 
