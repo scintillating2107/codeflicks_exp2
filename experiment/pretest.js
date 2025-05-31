@@ -87,6 +87,43 @@
 
 /////////////// Write the MCQ below in the exactly same described format ///////////////
 
+const myQuestions = [
+  {
+    question: "What does frictional loss in a pipe primarily depend on?",
+    answers: {
+      a: "Type of fluid only",
+      b: "Length and roughness of the pipe",
+      c: "Color of the pipe",
+      d: "Direction of sunlight"
+    },
+    explanations: {
+      a: "Fluid type matters, but pipe length and roughness are more critical.",
+      b: "Correct! These physical properties directly influence friction losses.",
+      c: "Color has no impact on fluid dynamics.",
+      d: "Sunlight does not affect internal pipe friction."
+    },
+    correctAnswer: "b",
+    difficulty: "beginner"
+  },
+  {
+    question: "Which of the following flow regimes is most associated with significant friction losses?",
+    answers: {
+      a: "Static fluid",
+      b: "Laminar flow",
+      c: "Turbulent flow",
+      d: "Supersonic flow"
+    },
+    explanations: {
+      a: "A static fluid does not flow and hence has no friction loss.",
+      b: "Laminar flow has lower friction losses compared to turbulent.",
+      c: "Correct! Turbulent flow results in higher friction losses.",
+      d: "Supersonic flow is not typically studied in simple pipe flow scenarios."
+    },
+    correctAnswer: "c",
+    difficulty: "intermediate"
+  },
+  // ... more questions ...
+];
 
  
 /////////////////////////////////////////////////////////////////////////////
