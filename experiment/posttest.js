@@ -96,7 +96,7 @@ const myQuestions = [
       c: "eight times",
       d: "sixteen times"
     },
-    correctAnswer: "b"
+    correctAnswer 1: "b"
   },
 
   {
@@ -107,7 +107,7 @@ const myQuestions = [
       c: "Remains constant",
       d: "NOT"
     },
-    correctAnswer 3: "a"
+    correctAnswer 2: "a"
   },
 
   {
@@ -118,7 +118,7 @@ const myQuestions = [
       c: "Resistance due to viscosity of fluid and pipe wall roughness",
       d: "Fluid evaporation"
     },
-    correctAnswer: "c"
+    correctAnswer 3: "c"
   },
 
   {
@@ -129,7 +129,7 @@ const myQuestions = [
       c: "Reynolds Number Equation",
       d: "Pascal’s Law"
     },
-    correctAnswer: "b"
+    correctAnswer 4: "b"
   },
 
   {
@@ -140,7 +140,7 @@ const myQuestions = [
       c: "Increases",
       d: "Becomes zero"
     },
-    correctAnswer: "c"
+    correctAnswer 5: "c"
   }
 ];
 
