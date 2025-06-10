@@ -1,4 +1,3 @@
-<h2>Theory</h2>
 <p>
   When fluid flows through a pipe, it experiences resistance due to the friction between the fluid layers and the pipe's internal surface. This resistance causes a loss of pressure or head, commonly known as <strong>friction loss</strong>.
 </p>
