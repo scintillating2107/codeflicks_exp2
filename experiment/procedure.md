@@ -1,4 +1,4 @@
-<h2>Procedure</h2>
+
 <ol>
   <li>Set up the experimental apparatus by connecting a straight pipe section to the fluid supply system, ensuring all joints are tight and leak-proof.</li>
   <li>Attach pressure measuring devices such as manometers or pressure gauges at two points along the pipe, separated by a known distance.</li>
