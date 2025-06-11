@@ -1,4 +1,4 @@
-<h2>References</h2>
+
 <ul>
   <li><a href="https://uta.pressbooks.pub/appliedfluidmechanics/chapter/experiment-4/" target="_blank">Experiment #4: Energy Loss in Pipes – Mavs Open Press</a></li>
   <li><a href="https://www.pipeflow.com/pipe-pressure-drop-calculations/pipe-friction-loss" target="_blank">Pipe Friction Loss Calculations – Pipe Flow Software</a></li>
