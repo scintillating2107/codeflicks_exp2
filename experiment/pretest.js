@@ -89,7 +89,7 @@
 
 const myQuestions = [
   {
-    question: "1. What does frictional loss in a pipe primarily depend on?",  ///// Write the question inside double quotes
+    question: "What does frictional loss in a pipe primarily depend on?",  ///// Write the question inside double quotes
     answers: {
       a: "Type of fluid only",                  ///// Write the option 1 inside double quotes
       b: "Length and roughness of the pipe",    ///// Write the option 2 inside double quotes
@@ -99,7 +99,7 @@ const myQuestions = [
     correctAnswer: "b"                          ///// Write the correct option inside double quotes
   },
   {
-    question: "2. Which of the following flow regimes is most associated with significant friction losses?",  ///// Write the question inside double quotes
+    question: " Which of the following flow regimes is most associated with significant friction losses?",  ///// Write the question inside double quotes
     answers: {
       a: "Static fluid",                        ///// Write the option 1 inside double quotes
       b: "Laminar flow",                        ///// Write the option 2 inside double quotes
@@ -109,7 +109,7 @@ const myQuestions = [
     correctAnswer: "c"                          ///// Write the correct option inside double quotes
   },
   {
-    question: "3. What does the Reynolds number indicate in pipe flow?",  ///// Write the question inside double quotes
+    question: " What does the Reynolds number indicate in pipe flow?",  ///// Write the question inside double quotes
     answers: {
       a: "The chemical composition of the fluid",   ///// Write the option 1 inside double quotes
       b: "The speed of sound in the fluid",         ///// Write the option 2 inside double quotes
@@ -119,7 +119,7 @@ const myQuestions = [
     correctAnswer: "c"                              ///// Write the correct option inside double quotes
   },
   {
-    question: "4. If the flow rate increases in a pipe, what generally happens to the friction loss?",  ///// Write the question inside double quotes
+    question: "If the flow rate increases in a pipe, what generally happens to the friction loss?",  ///// Write the question inside double quotes
     answers: {
       a: "It decreases",                            ///// Write the option 1 inside double quotes
       b: "It remains constant",                     ///// Write the option 2 inside double quotes
@@ -129,7 +129,7 @@ const myQuestions = [
     correctAnswer: "c"                              ///// Write the correct option inside double quotes
   },
   {
-    question: "5. Which of the following best describes the head loss in a straight pipe due to friction?",  ///// Write the question inside double quotes
+    question: " Which of the following best describes the head loss in a straight pipe due to friction?",  ///// Write the question inside double quotes
     answers: {
       a: "A gain in mechanical energy",             ///// Write the option 1 inside double quotes
       b: "A pressure drop along the length of the pipe", ///// Write the option 2 inside double quotes
