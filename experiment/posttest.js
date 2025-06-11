@@ -89,58 +89,58 @@
 
 const myQuestions = [
   {
-    question 1: "On increasing the radius of the steel ball to double its value, the terminal velocity of the ball becomes:",
+    question: "On increasing the radius of the steel ball to double its value, the terminal velocity of the ball becomes:",
     answers: {
       a: "double",
       b: "four times",
       c: "eight times",
       d: "sixteen times"
     },
-    correctAnswer 1: "b"
+    correctAnswer : "b"
   },
 
   {
-    question 2: "On increasing the density of material of the falling ball, its terminal velocity:",
+    question : "On increasing the density of material of the falling ball, its terminal velocity:",
     answers: {
       a: "Increases",
       b: "Decreases",
       c: "Remains constant",
       d: "NOT"
     },
-    correctAnswer 2: "a"
+    correctAnswer : "a"
   },
 
   {
-    question 3: "What is the primary cause of friction loss in a straight pipe?",
+    question : "What is the primary cause of friction loss in a straight pipe?",
     answers: {
       a: "Change in pipe direction",
       b: "Pipe expansion",
       c: "Resistance due to viscosity of fluid and pipe wall roughness",
       d: "Fluid evaporation"
     },
-    correctAnswer 3: "c"
+    correctAnswer : "c"
   },
 
   {
-    question 4: "Which equation is used to calculate head loss due to friction in a straight pipe?",
+    question : "Which equation is used to calculate head loss due to friction in a straight pipe?",
     answers: {
       a: "Bernoulli's Equation",
       b: "Darcy-Weisbach Equation",
       c: "Reynolds Number Equation",
       d: "Pascal’s Law"
     },
-    correctAnswer 4: "b"
+    correctAnswer : "b"
   },
 
   {
-    question 5: "As the flow rate of fluid increases in a pipe, the friction loss generally:",
+    question : "As the flow rate of fluid increases in a pipe, the friction loss generally:",
     answers: {
       a: "Decreases linearly",
       b: "Stays constant",
       c: "Increases",
       d: "Becomes zero"
     },
-    correctAnswer 5: "c"
+    correctAnswer : "c"
   }
 ];
 
